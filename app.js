@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded' , () => {
     var width = 10
     const ScoreDis = document.querySelector('#score') // The score span tag
     const startBtn = document.querySelector('#startBtn') // The button to start/stop the game
-
+    let nextRandom;
+    let timerId;
+    let score = 0;
     // Tetrominoes
     const colors = [
         'orange',
@@ -94,5 +96,38 @@ document.addEventListener('DOMContentLoaded' , () => {
 
     document.addEventListener('keyup', control)
 
+    const moveDown = () => {
+        undraw()
+        currentPosition += width
+        draw()
+        freeze()
+    }
 
+    const freeze = () => {
+        if (current.some(index => {
+            squares[currentPosition + index + width].classList.contains('taken')
+        })) {
+            current.forEach(index => squares[currentPosition + index].classList.add('taken'))
+            // New falling tetromino
+            random = nextRandom
+            nextRandom = Math.floor(Math.random() * theTetrominoes.length)
+            current = theTetrominoes[random][currentRotation]
+            currentPosition = 4
+            draw()
+            displayShape()
+            addScore()
+            gameOver()
+        }
+    }
+
+    const moveLeft = () => {
+        // Move left, unless it is at the edge or being blocked
+        undraw()
+        const isAtRightEdge = current.some(index => (currentPosition + index) % width === width - 1)
+        if (!isAtRightEdge) currentPosition += 1
+        if (current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+            currentPosition -= 1
+        }
+        draw()
+    }
 })
