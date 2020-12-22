@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded' , () => {
         } else if (e.keyCode === 38) {
             rotate()
         } else if (e.keyCode === 39) {
-            moveRight()
+            moveLeft()
         } else if (e.keyCode === 40) {
             moveDown()
         }
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded' , () => {
         return current.some(index => (currentPosition + index) % width === 0)
     }
 
-    const checkRotatedPostiton(P){
+    const checkRotatedPostiton = (P) => {
         P = P || currentPosition       //get current position.  Then, check if the piece is near the left side.
         if ((P + 1) % width < 4) {         //add 1 because the position index can be 1 less than where the piece is (with how they are indexed).     
             if (isAtRight()) {            //use actual position to check if it's flipped over to right side
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded' , () => {
         else if (P % width > 5) {
             if (isAtLeft()) {
                 currentPosition -= 1
-                checkRotatedPosition(P)
+                checkRotatedPostiton(P)
             }
         }
     }
@@ -162,7 +162,25 @@ document.addEventListener('DOMContentLoaded' , () => {
             currentRotation = 0
         }
         current = theTetrominoes[random][currentRotation]
-        checkRotatedPosition()
+        checkRotatedPostiton()
         draw()
     }
+    ///
+
+
+    // Show tetro in min grid 
+    const displaySquares = document.querySelectorAll('.mini-grid div')
+    var displayWidth = 4
+    var displayIndex = 0
+
+    //the Tetrominos without rotations
+    const upNextTetrominoes = [
+        [1, displayWidth + 1, displayWidth * 2 + 1, 2], //lTetromino
+        [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //zTetromino
+        [1, displayWidth, displayWidth + 1, displayWidth + 2], //tTetromino
+        [0, 1, displayWidth, displayWidth + 1], //oTetromino
+        [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //iTetromino
+    ]
+
+
 })
