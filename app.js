@@ -6,8 +6,13 @@ document.addEventListener('DOMContentLoaded' , () => {
     const startBtn = document.querySelector('#startBtn') // The button to start/stop the game
 
     // Tetrominoes
-
-
+    const colors = [
+        'orange',
+        'red',
+        'purple',
+        'green',
+        'blue'
+    ]
 
 
     const lTetromino = [
@@ -45,6 +50,25 @@ document.addEventListener('DOMContentLoaded' , () => {
         [width, width + 1, width + 2, width + 3]
     ]
 
-    
-    console.log(lTetro)
+    const theTetrominoes = [lTetromino, zTetromino, tTetromino, oTetromino, iTetromino]
+
+    console.log(tTetromino[0][0])
+
+    let currentPosition = 4
+    let currentRotation = 0
+
+    //randomly select a Tetromino and its first rotation
+    let random = Math.floor(Math.random() * theTetrominoes.length)
+    let current = theTetrominoes[random][currentRotation]
+
+
+    const draw = () => {
+        current.forEach(index => {
+            squares[currentPosition + index].classList.add('tetromino')
+            squares[currentPosition + index].style.backgroundColor = colors[random]
+        })
+    }
+    draw()
+
+
 })
